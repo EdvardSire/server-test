@@ -3,7 +3,7 @@ const fs = require("fs")
 
 getJSON = (filename) => {
     return fs.existsSync(filename)
-    ? JSON.parse(fs.readFileSync(filename))
+    ? JSON.parse(fs.readFileSync(filename).toString())
     : "Error"
 }
 
