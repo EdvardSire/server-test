@@ -1,3 +1,13 @@
+//JSON function
+const fs = require("fs")
+
+getJSON = (filename) => {
+    return fs.existsSync(filename)
+    ? JSON.parse(fs.readFileSync(filename))
+    : "Error"
+}
+
+
 //Basic Node server
 const http = require("http");
 const port = process.env.PORT || 5000;
@@ -7,10 +17,7 @@ const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.writeHead(200); // status code
 
-    let content = {
-        "id":123
-    };
-    let data = JSON.stringify(content);
+    let data = JSON.stringify(getJSON("data.json"));
 
     res.end(data);
 });
