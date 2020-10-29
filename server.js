@@ -1,11 +1,11 @@
 //JSON function
-const fs = require("fs")
+const fs = require("fs");
 
 getJSON = (filename) => {
     return fs.existsSync(filename)
     ? JSON.parse(fs.readFileSync(filename).toString())
-    : "Error"
-}
+    : "Error";
+};
 
 
 //Basic Node server
@@ -17,11 +17,11 @@ const server = http.createServer((req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.writeHead(200); // status code
 
-    let data = JSON.stringify(getJSON("data.json"));
+    let data = JSON.stringify(getJSON("dat.json"));
 
     res.end(data);
 });
 
 server.listen(port, () => {
-    console.log("LIstening on port")
+    console.log("LIstening on port");
 });
