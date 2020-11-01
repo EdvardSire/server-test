@@ -12,27 +12,21 @@ const http = require("http");
 const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
-	// Handle request
-	if (req.headers["content-type"] != "text/plain") {
-		res.statusCode = 400;
-		res.end();
+	// GET or POST
+	switch (req.method) {
+		case "GET":
+			res.statusCode = 200;
+			res.end();
+
+		case "POST":
+			res.statusCode = 201;
+			res.end();
+
+		default:
+			response.writeHeader(200, { "Content-Type": "text/html" });
+			response.write(html);
+			response.end();
 	}
-
-	let data = "";
-	req.on("data", (chunk) => {
-		data += chunk.toString("utf8");
-	});
-
-	req.on("end", () => {
-		//Create response
-		res.setHeader("Content-type", "application/json");
-		res.setHeader("Access-Control-Allow-Origin", "*");
-
-		res.statusCode = 200;
-		res.end();
-		console.log(data);
-		//JSON.stringify(getJSON("data.json"))
-	});
 });
 
 server.listen(port, () => {
