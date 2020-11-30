@@ -3,7 +3,7 @@ const http = require("http");
 const fs = require("fs");
 
 //JSON function
-getJSON = (filename) => {
+getJSONObject = (filename) => {
 	return fs.existsSync(filename)
 		? JSON.parse(fs.readFileSync(filename).toString())
 		: "Wrong filename";
@@ -21,6 +21,18 @@ const server = http.createServer((req, res) => {
 		});
 	};
 
+	displayJSON = (filename) => {
+		if (req.headers["content-type"] == "!application/json") {
+			res.setHeader("Content-type", "application/json");
+			res.setHeader("Access-Control-Allow-Origin", "*");
+			res.statusCode = 200;
+			res.end(JSON.stringify(getJSONObject(filename)));
+		} else {
+			res.statusCode = 400;
+			res.end("Wrong header");
+		}
+	};
+
 	// GET or POST
 	switch (req.method) {
 		case "GET":
@@ -29,6 +41,7 @@ const server = http.createServer((req, res) => {
 					displayHtml("./index.html");
 					break;
 				case "/api/get":
+					displayJSON("data.json");
 					break;
 				default:
 					res.statusCode = 405;
